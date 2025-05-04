@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>User Management</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Customers</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.user.name }}</td>
+                        <td>{{ customer.user.username }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_user', user_id=customer.user.user_id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-md-6">
+            <h2>Service Professionals</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Service Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for professional in professionals %}
+                    <tr>
+                        <td>{{ professional.user.name }}</td>
+                        <td>{{ professional.user.username }}</td>
+                        <td>{{ professional.service_type }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_user', user_id=professional.user.user_id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

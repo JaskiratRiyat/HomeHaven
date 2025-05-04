@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>My Service Requests</h2>
+        <a href="{{ url_for('professional_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>  
+    <div class="mb-3">
+        <a href="{{ url_for('professional_service_requests') }}" class="btn btn-outline-primary">All Requests</a>
+        <a href="{{ url_for('professional_service_requests', status='requested') }}" class="btn btn-outline-primary">Requested</a>
+        <a href="{{ url_for('professional_service_requests', status='assigned') }}" class="btn btn-outline-primary">Assigned</a>
+        <a href="{{ url_for('professional_service_requests', status='completed') }}" class="btn btn-outline-primary">Completed</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Service</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Preferred Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in service_requests %}
+            <tr>
+                <td>{{ request.service_request_id }}</td>
+                <td>{{ request.service.name }}</td>
+                <td>{{ request.customer.user.name }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.preferred_date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

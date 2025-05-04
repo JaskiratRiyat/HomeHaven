@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Create' if not service else 'Edit' }} Service{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2>{{ 'Create' if not service else 'Edit' }} Service</h2>
+        <form method="POST" action="/admin/services/{{ 'new' if not service else 'edit/' + service.service_id }}">
+            <div class="mb-3">
+                <label for="name" class="form-label">Service Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ service.name if service }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="base_price" class="form-label">Base Price</label>
+                <input type="number" class="form-control" id="base_price" name="base_price" value="{{ service.base_price if service }}" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ service.description if service }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ 'Create' if not service else 'Update' }} Service</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

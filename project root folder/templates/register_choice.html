@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}HomeHaven{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Choose Registration Type</h2>
+                <div class="d-grid gap-3 mt-4">
+                    <a href="{{ url_for('register_customer') }}" class="btn btn-primary">Register as Customer</a>
+                    <a href="{{ url_for('register_professional') }}" class="btn btn-secondary">Register as Service Professional</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

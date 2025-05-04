@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block navigation %}
+    <a class="nav-link" href="/admin/users">Manage Users</a>
+    <a class="nav-link" href="/admin/services">Manage Services</a>
+    <a class="nav-link" href="/admin/service-requests">Service Requests</a>
+    <a class="nav-link" href="/logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">Search</div>
+            <div class="card-body">
+                <a href="/admin/search/customers" class="btn btn-primary mb-2">Search Customers</a>
+                <a href="/admin/search/professionals" class="btn btn-primary">Search Service Professionals</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">Services Management</div>
+            <div class="card-body">
+                <a href="/admin/services/new" class="btn btn-success mb-2">Create New Service</a>
+                <a href="/admin/services" class="btn btn-primary">View All Services</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">Service Requests</div>
+            <div class="card-body">
+                <a href="/admin/service-requests" class="btn btn-primary">View All Requests</a>
+                <a href="{{ url_for('unverified_professionals') }}" class="btn btn-warning">
+                    Unverified Professionals ({{ unverified_professionals_count }})
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">Service Professionals Summary</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Total Professionals</h5>
+                        <h3>{{ total_professionals }}</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Verified Professionals</h5>
+                        <h3>{{ verified_professionals }}</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Average Rating</h5>
+                        <h3>
+                            {% if avg_professional_rating is defined %}
+                                {{ avg_professional_rating|round(1) }} / 5.0
+                            {% else %}
+                                No ratings yet
+                            {% endif %}
+                        </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Total Reviews</h5>
+                        <h3>{{ total_professional_reviews }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

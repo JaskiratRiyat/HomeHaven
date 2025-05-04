@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Book Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Book {{ service.name }} Service</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Service Details</h3>
+            <p><strong>Name:</strong> {{ service.name }}</p>
+            <p><strong>Base Price:</strong> {{ service.base_price }} rupees</p>
+            <p><strong>Description:</strong> {{ service.description }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Professional Details</h3>
+            <p><strong>Name:</strong> {{ professional.user.name }}</p>
+            <p><strong>Experience:</strong> {{ professional.experience }} years</p>
+            <p><strong>Average Rating:</strong> {{ professional.avg_rating }}/5</p>
+        </div>
+    </div>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" name="preferred_date" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Preferred Time</label>
+            <input type="time" name="preferred_time" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Service Address</label>
+            <input type="text" name="service_address" class="form-control" value="{{ customer.address }}" required>
+        </div>
+        <div class="form-group">
+            <label>Service PIN Code</label>
+            <input type="text" name="service_pin_code" class="form-control" value="{{ customer.pin_code }}" required>
+        </div>
+        <div class="form-group">
+            <label>Special Instructions (Optional)</label>
+            <textarea name="special_instructions" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Service Request</button>
+    </form>
+</div>
+{% endblock %}

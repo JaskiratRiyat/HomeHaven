@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard{% endblock %}
+
+{% block navigation %}
+    <a class="nav-link" href="/customer/profile">My Profile</a>
+    <a class="nav-link" href="/customer/service/search">Book Services</a>
+    <!-- <a class="nav-link" href="/customer/service-request/edit/{{ service_requests.service_request_id }}">My Requests</a> -->
+    <a class="nav-link" href="/logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Customer Profile</div>
+            <div class="card-body">
+                <p><strong>Address:</strong> {{ customer.address }}</p>
+                <p><strong>PIN Code:</strong> {{ customer.pin_code }}</p>
+                <p><strong>Registered Since:</strong> {{ customer.user.date_created.strftime('%Y-%m-%d') }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Service Requests</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Request Date</th>
+                            <th>Professional</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in service_requests %}
+                        <tr>
+                            <td>{{ request.service.name }}</td>
+                            <td>{{ request.date_of_request.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ request.professional.user.name or 'Not Assigned' }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if request.status == 'requested' %}bg-secondary
+                                    {% elif request.status == 'assigned' %}bg-primary
+                                    {% elif request.status == 'completed' %}bg-success
+                                    {% elif request.status == 'closed' %}bg-info{% endif %}">
+                                    {{ request.status }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if request.status == 'completed' %}
+                                    <a href="/customer/review/{{ request.service_request_id }}" class="btn btn-sm btn-warning">Review</a>
+                                {% elif request.status in ['requested', 'assigned'] %}
+                                    <a href="/customer/service-request/delete/{{ request.service_request_id }}" 
+                                       class="btn btn-sm btn-danger">
+                                        Delete
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

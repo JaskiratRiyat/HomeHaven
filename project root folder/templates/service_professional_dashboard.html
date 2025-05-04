@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}HomeHaven{% endblock %}
+
+{% block navigation %}
+    <a class="nav-link" href="/professional/profile">My Profile</a>
+    <a class="nav-link" href="/professional/service-requests">Service Requests</a>
+    <a class="nav-link" href="/logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-3">
+        <form method="GET" class="d-flex align-items-center">
+            <select name="status" class="form-select me-2" style="width: auto;">
+                <option value="">All Requests</option>
+                <option value="assigned">Assigned</option>
+                <option value="completed">Completed</option>
+                <option value="rejected">Rejected</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Professional Details</div>
+                <div class="card-body">
+                    <p><strong>Service Type:</strong> {{ professional.service_type }}</p>
+                    <p><strong>Experience:</strong> {{ professional.experience }} years</p>
+                    <p><strong>Profile Status:</strong> 
+                        {% if professional.profile_verified %}
+                            <span class="badge bg-success">Verified</span>
+                        {% else %}
+                            <span class="badge bg-warning">Pending Verification</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Performance Metrics</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Average Rating</h5>
+                            <h3>{{ professional.avg_rating|round(1) }} / 5.0</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Total Reviews</h5>
+                            <h3>{{ professional.total_reviews }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Recent Service Requests</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Customer</th>
+                                <th>Request Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in recent_requests %}
+                            <tr>
+                                <td>{{ request.service.name }}</td>
+                                <td>{{ request.customer.user.name }}</td>
+                                <td>{{ request.date_of_request.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if request.status == 'requested' %}bg-secondary
+                                        {% elif request.status == 'assigned' %}bg-primary
+                                        {% elif request.status == 'completed' %}bg-success
+                                        {% elif request.status == 'closed' %}bg-info{% endif %}">
+                                        {{ request.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if request.status == 'requested' %}
+                                        <a href="/professional/request/{{ request.service_request_id }}/accept" class="btn btn-sm btn-success">Accept</a>
+                                        <a href="/professional/request/{{ request.service_request_id }}/reject" class="btn btn-sm btn-danger">Reject</a>
+                                    {% elif request.status == 'assigned' %}
+                                        <a href="/professional/request/{{ request.service_request_id }}/complete" class="btn btn-sm btn-primary">Complete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
