@@ -1,6 +1,6 @@
 HomeHaven 🏠
 
-A web application built with Flask (Python) that connects users with trusted household service providers, including plumbing, electrical work, cleaning, and more.
+A web application built with Flask (Python) and jinja2 for templates that connects users with trusted household service providers, including plumbing, electrical work, cleaning, and more.
 
 Features
 •	🔍 Browse Services: Search and filter a variety of household services.
