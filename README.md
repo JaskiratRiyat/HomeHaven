@@ -24,10 +24,15 @@ pip install -r requirements.txt
 
 4.	Set up environment variables
 Create a .env file in the root directory and add:
+
 FLASK_DEBUG=true
+
 FLASK_APP=app.py
+
 SQLALCHEMY_DATABASE_URI=sqlite:///db.sqlite3
+
 SQLALCHEMY-TRACK-MODIFICATION=False
+
 SECRET_KEY="your key :)"
 
 6.	Run the app
