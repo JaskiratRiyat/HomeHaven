@@ -15,8 +15,10 @@ git clone https://github.com/yourusername/household-services-app.git
 
 cd household-services-app
 
-2.	Create and activate a virtual environment (recommended)
+2.	Create and activate a virtual environment (recommended):
+
 python -m venv venv
+
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 3.	Install dependencies
